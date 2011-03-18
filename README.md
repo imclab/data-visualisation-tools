@@ -1,1 +1,1 @@
-## Wizualizacja danych g≥Ûwnie z CouchDB
+Ôªø## Wizualizacja danych g≈Ç√≥wnie z CouchDB
