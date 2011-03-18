@@ -1,0 +1,1 @@
+## Wizualizacja danych g³ównie z CouchDB
