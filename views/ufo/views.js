@@ -6,7 +6,7 @@ ddoc = {
 module.exports = ddoc;
 
 ddoc.views.timeBetweenReporting = {
-  map: function(doc) {    
+  map: function(doc) {
     if (doc.sighted_at != "0000" && doc.reported_at != "0000")
     { 
       var repY = doc.reported_at.substring(0,4);
@@ -22,19 +22,27 @@ ddoc.views.timeBetweenReporting = {
 	    diffM = sigM - repM;
         diffY -= 1;
       }
-	  else
-	    diffM = repM - sigM;
-	  if((repD < sigD) && (repM == sigM)){  
-	    diffD = sigD - repD;
-		diffY -= 1;
-	  }	
+      else
+	diffM = repM - sigM;
+      if((repD < sigD) && (repM == sigM)){  
+	  diffD = sigD - repD;
+	  diffY -= 1;
+      }	
       else if(repD < sigD) {  
 	    diffD = sigD - repD;
 		diffM -= 1;
-	  }
-	  else
-	    diffD = repD - sigD;
-      emit([doc.duration, {years : diffY, months : diffM, days: diffD}], 1);
+      }
+      else
+        diffD = repD - sigD;
+      if (diffY < 0)
+        diffY = diffY * (-1);
+
+      if (diffM < 0)
+        diffM = diffM * (-1);
+
+      if (diffD < 0)
+        diffD = diffD * (-1);
+      emit(doc.duration, {years : diffY, months : diffM, days: diffD});
     }
   },
 }
