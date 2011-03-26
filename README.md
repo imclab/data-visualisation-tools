@@ -21,4 +21,5 @@
 * [Spektrum](http://www.neoformix.com/Projects/TwitterSpectrum/TwitterSpectrum.html)
 * [http://neoformix.com/Projects/TwitterStreamGraphs/view.php](http://neoformix.com/Projects/TwitterStreamGraphs/view.php)
 * [http://www.neoformix.com/Projects/TwitArcs/TwitArcs.html](http://www.neoformix.com/Projects/TwitArcs/TwitArcs.html)
+* This dynamic news map displays Google news scaled by number of articles. [dynamic map] (http://www.drasticdata.nl/newsmapus.htm)
 
