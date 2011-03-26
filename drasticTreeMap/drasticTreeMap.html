@@ -1,0 +1,47 @@
+<html>
+<head>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript" src="DrasticTreemapGApi.js"></script>
+<script type="text/javascript">
+	google.load("jquery", "1.4.2");
+	google.load("visualization", "1");
+	google.load("swfobject", "2.2");  
+	
+	google.setOnLoadCallback(init_file);
+	  
+	function init_file(){
+		$.ajax({
+			url: 'file_json',	   
+			success: drawVisualization
+		});      
+    }
+	
+	function drawVisualization(incomingdata) {
+		json_data = eval(incomingdata);
+		var data = new google.visualization.DataTable();
+
+		data.addRows(json_data.length);
+		data.addColumn('string', 'Category');		
+		data.addColumn('string', 'Group');		
+		data.addColumn('number', 'Value');
+		for(i=0;i<json_data.length;i++){
+			data.setValue(i, 0, json_data[i]['category']);			
+			data.setValue(i, 1, json_data[i]['group']);	
+			data.setValue(i, 2, json_data[i]['value']);
+		}	
+
+		var vis = new drasticdata.DrasticTreemap(document.getElementById('thediv'));
+
+		vis.draw(data, {
+			groupbycol: "Category",
+			labelcol: "Group",
+			variables: ['Value']
+			}
+		);
+   }
+</script>
+</head>
+<body>
+<div id="thediv" style="width:1000px; height:1000px;"></div>
+</body>
+</html>
