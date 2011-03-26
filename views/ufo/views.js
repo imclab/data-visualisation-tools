@@ -53,4 +53,15 @@ ddoc.views.placeCount = {
     }
   },
 }
-
+ddoc.views.toTimeline = {
+  map: function(doc) {
+    if(doc.location != "" && doc.sighted_at != "0000") {
+      var place = "http://maps.google.com/maps/api/staticmap?size=480x480&sensor=true&markers=icon:http://tinyurl.com/5samrvy|"+doc.location;
+      var tit = doc.shape + " " + doc.duration;
+      emit({title: tit, start: doc.sighted_at, icon: "UFO-icon", description: doc.description, image: place}, null);
+    }
+  },
+  reduce: function(keys, values) {
+    return null;
+  }
+}
