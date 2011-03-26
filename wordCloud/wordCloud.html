@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="http://visapi-gadgets.googlecode.com/svn/trunk/wordcloud/wc.css"/>
+    <script type="text/javascript" src="http://visapi-gadgets.googlecode.com/svn/trunk/wordcloud/wc.js"></script>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+  </head>
+  <body>
+    <div id="wcdiv" style="width: 200px"></div>
+    <script type="text/javascript">
+      google.load("visualization", "1");
+	    google.load("jquery", "1.4.2");
+      google.setOnLoadCallback(draw);
+	  
+	  function init_file(){
+      $.ajax({
+        url: 'file_json',
+        success: draw
+      });      
+    }
+	  
+      function draw() {
+		json_data = eval('file_json');
+
+
+		var data = new google.visualization.DataTable();
+ 
+		data.addRows(data.length);
+		data.addColumn('string', 'Tag');		
+		data.addColumn('string', 'Quote');
+		for(i=0;i<json_data.length;i++){
+			data.setCell(i, 0, json_data[i]['tag']);			
+			data.setCell(i, 1, json_data[i]['quotation']);
+		}
+      /*        data.addColumn('string', 'Text1');
+        data.addColumn('string', 'Text2');
+        data.addRows(3);
+        data.setCell(0, 0, 'This is a test');
+        data.setCell(0, 1, 'This test is quite hard');
+        data.setCell(1, 0, 'A hard test or not?');
+        data.setCell(1, 1, 'This was not too hard');
+        data.setCell(2, 0, 'Hard hard hard this is so hard !!!');
+        data.setCell(2, 1, 'For every test there is a solution. For every one');
+        */
+		
+        var outputDiv = document.getElementById('wcdiv');
+        var wc = new WordCloud(outputDiv);
+        wc.draw(data, null);
+      }
+    </script>
+  </body>
+</html>
