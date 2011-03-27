@@ -7,7 +7,8 @@ module.exports = ddoc;
 
 ddoc.views.toTimeline = {
   map: function(doc) {
-	emit({title: doc.name, start: doc.released, link: doc.url, description: doc.overview, icon: doc.posters[3].image.url}, null);
+	if(doc.overview != "No overview found.")
+      emit({title: doc.name, start: doc.released, link: doc.url, description: doc.overview, icon: doc.posters[3].image.url}, null);
   },
   reduce: function(keys, values) {return null;}
 }  

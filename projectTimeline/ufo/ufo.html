@@ -7,12 +7,14 @@
     <!-- To use this file on your own system, replace ../../api/timeline-api.js with  -->
     <!--     http://api.simile-widgets.org/timeline/2.3.1/timeline-api.js          -->
     <!-- (Where 2.3.1 is the current release number.)                                 -->
-    <script src="../api/timeline-api.js?bundle=true" type="text/javascript"></script>
+    <script src="../api/timeline-api.js" type="text/javascript"></script>
+	<script src="../api/examples.js" type="text/javascript"></script>
 
     <script>
         var tl;
         function onLoad() {
-            var eventSource = new Timeline.DefaultEventSource(0);
+            var eventSourceEven = new Timeline.DefaultEventSource(0);
+			var eventSourceOdd = new Timeline.DefaultEventSource(0);
             
             var theme = Timeline.ClassicTheme.create();
             theme.event.bubble.width = 800;
@@ -20,21 +22,49 @@
             var d = Timeline.DateTime.parseIso8601DateTime("19900610");
             var bandInfos = [
                 Timeline.createBandInfo({
-                    width:          "100%", 
+                    width:          "45%", 
                     intervalUnit:   Timeline.DateTime.YEAR, 
-                    intervalPixels: 200,
-                    eventSource:    eventSource,
+                    intervalPixels: 300,
+                    eventSource:    eventSourceEven,
+					start:			"1950",
+					end:			"2002",
                     date:           d,
                     theme:          theme,
                     layout:         'original'  // original, overview, detailed
+                }),
+				Timeline.createBandInfo({
+                    width:          "45%", 
+                    intervalUnit:   Timeline.DateTime.YEAR, 
+                    intervalPixels: 300,
+                    eventSource:    eventSourceOdd,
+					start:			"1950",
+					end:			"2002",
+                    date:           d,
+                    theme:          theme,
+                    layout:         'original'  // original, overview, detailed
+                }),
+				Timeline.createBandInfo({
+                   width:          "10%", 
+                    intervalUnit:   Timeline.DateTime.YEAR,								
+                    intervalPixels: 50,                    
+                    date:           d,
+                    //theme:          theme2,
+                    layout:         'overview'  // original, overview, detailed
                 })
             ];
+			bandInfos[2].syncWith = 0;
+			bandInfos[2].syncWith = 1;
+			bandInfos[2].highlight = true;
             
             tl = Timeline.create(document.getElementById("tl"), bandInfos, Timeline.HORIZONTAL);
             // stop browser caching of data during testing...
-            tl.loadJSON("file.json?"+ (new Date().getTime()), function(json, url) {
-                eventSource.loadJSON(json, url);
+            tl.loadJSON("fileEven.json?"+ (new Date().getTime()), function(json, url) {
+                eventSourceEven.loadJSON(json, url);
             });
+			 tl.loadJSON("fileOdd.json?"+ (new Date().getTime()), function(json, url) {
+                eventSourceOdd.loadJSON(json, url);
+            });
+			setupFilterHighlightControls(document.getElementById("controls"), tl, [0,1], theme);
         }
         var resizeTimerID = null;
         function onResize() {
@@ -54,8 +84,9 @@
              
       <p>Timeline version <span id='tl_ver'></span>.</p>
       <script>Timeline.writeVersion('tl_ver')</script>      
-
-      <div id="tl" class="timeline-default" style="height: 300px;"></div>
+	  <div class="controls" id="controls"></div>
+      <div id="tl" class="timeline-default" style="height: 1000px;"></div>
+	  
     </div>
     
     <div id="footer">

@@ -1,7 +1,7 @@
 import re
    
-o = open("file.json","w")   
-data = open("data.json").read()
+o = open("fileOdd.json","w")   
+data = open("dataOdd.json").read()
 data.replace("{\"key\":","")  
 temp = data.replace("{\"key\":","")
 temp.replace(",\"value\":null}","")
