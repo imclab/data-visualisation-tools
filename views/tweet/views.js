@@ -13,7 +13,7 @@ ddoc.views.byTags = {
   reduce: "_count"
 }
 
-ddoc.views.byTags = {
+ddoc.views.toWordCloud = {
   map: function(doc) {
    for (var k in doc.tags)
      emit({tag: doc.tags[k], quotation: doc.quotation}, null);
