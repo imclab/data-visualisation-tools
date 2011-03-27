@@ -1,0 +1,48 @@
+<html>
+<head>
+  <script type='text/javascript' src='http://www.google.com/jsapi'></script> 
+   <script type='text/javascript'>
+    google.load("jquery", "1.4.2");
+    google.load('visualization', '1', {'packages': ['geomap']});
+ 
+    google.setOnLoadCallback(init_map);
+ 
+    function init_map(){
+      $.ajax({
+        url: 'file_json',
+        success: drawMap
+      });      
+    }
+ 
+    function drawMap(incomingdata) {
+      json_data = eval(incomingdata);
+      var data = new google.visualization.DataTable();
+ 
+      data.addRows(json_data.length);
+      data.addColumn('string', 'Country');
+      data.addColumn('number', 'Czas programów w dniach');
+      data.addColumn('string','HOVER', 'Details');
+      for(i=0;i<json_data.length;i++){
+        data.setValue(i, 0, json_data[i]['nation']);
+        data.setValue(i, 1, parseFloat(json_data[i]['timeTotal']));
+        data.setValue(i, 2, json_data[i]['country_name']);
+      }
+ 
+ 
+      var options = {};
+      options['dataMode'] = 'regions';
+	  options['width'] = '1000px';
+      options['height'] = '600px';
+      var container = document.getElementById('map_canvas');
+      var geomap = new google.visualization.GeoMap(container);
+ 	
+      geomap.draw(data, options);
+  };
+  </script>
+  
+  </head>
+ 
+<body>
+ <center> <div id='map_canvas' style="width:1000px;height:1000px"></div></center>
+</body>
+</html>

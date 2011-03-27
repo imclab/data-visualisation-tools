@@ -51,3 +51,23 @@ ddoc.views.toDrasticTree = {
   },
   reduce: "_count"
 }
+ddoc.views.showsDurationInCountries = {
+  map: function(doc) {
+    if(doc.episode_running_time != "" && doc.number_of_episodes != "" && doc.country_of_origin != "" && doc.country_of_origin != "unknown") {
+      var countries = doc.country_of_origin.split(",");
+      for (var i = 0, len = countries.length; i < len; i++) {
+        var country = countries[i];
+        var runningTime = parseInt(doc.episode_running_time);
+        var numberEpisodes = parseInt(doc.number_of_episodes);
+        emit({nation: country}, {timeTotal: runningTime * numberEpisodes / 60 / 24});
+      } 
+    }
+  },
+  reduce: function(keys, values, rereduce) {   
+    var time= 0;
+    values.forEach(function(element) {
+      time += element.timeTotal;
+    });
+    return {timeTotal: time};
+  }
+}
