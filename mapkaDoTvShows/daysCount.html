@@ -20,12 +20,10 @@
  
       data.addRows(json_data.length);
       data.addColumn('string', 'Country');
-      data.addColumn('number', 'Czas programów w dniach');
-      data.addColumn('string','HOVER', 'Details');
+      data.addColumn('number', 'Value');    
       for(i=0;i<json_data.length;i++){
         data.setValue(i, 0, json_data[i]['nation']);
-        data.setValue(i, 1, parseFloat(json_data[i]['timeTotal']));
-        data.setValue(i, 2, json_data[i]['country_name']);
+        data.setValue(i, 1, parseFloat(json_data[i]['timeTotal']));    
       }
  
  

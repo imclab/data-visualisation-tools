@@ -32,18 +32,18 @@
       var options = {};
       options['dataMode'] = 'regions';
 	  options['width'] = '1000px';
-      options['height'] = '600px';
+      options['height'] = '600px';	  
+      
+
       var container = document.getElementById('map_canvas');
-      var geomap = new google.visualization.GeoMap(container);
- 
-			
- 
+      var geomap = new google.visualization.GeoMap(container); 
       geomap.draw(data, options);
   };
   </script> 
 </head>
  
 <body>
-  <center><div id='map_canvas' style="width:1000px;height:1000px"></div></center>
+  <center><div id='map_canvas' style="width:1000px;height:1000px"></div></center>   
+
 </body>
 </html>
